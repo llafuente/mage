@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" ></script>
+<title>mage-test-001</title>
+
+<!-- <script src="../dist/js-2dmath-browser.min.js" type="text/javascript" ></script> -->
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="../dist/mage.js" type="text/javascript" ></script>
+<style>*{margin: 0; padding: 0;}</style>
+</head>
+<body>
+<canvas id="canvas" width="960" height="640" style="border: 1px solid red;"></canvas>
+</body>
+</html>
+
+<script>
+//
+// --- INIT ---
+//
+//expose js-2dmath globally, I'm lazy!
+
+var mage = require("mage"),
+    ctx = document.getElementById("canvas").getContext("2d");
+
+mage.globalize(window);
+
+var scene = new mage.Scene("scene", ctx, 960, 640);
+var layer = scene.createLayer();
+
+// slow this shit i dont see the log!
+//window.requestAnimFrame = function (callback) {
+//    window.setTimeout(callback, 1000);
+//};
+
+scene.start(window.requestAnimFrame)
+
+var tmx;
+$(function() {
+  tmx = {
+    layers: [],
+    polygons: [],
+    parsePolygons: function(layers) {
+      var self = this;
+
+      layers.forEach(function(layer) {
+        if (layer.type === "objectgroup") {
+          layer.objects.forEach(function(object) {
+            if (object.height && object.width && !object.ellipse) {
+              self.polygons.push(
+                Polygon.create(
+                  [object.x, object.y],
+                  [object.x + object.width, object.y],
+                  [object.x + object.width, object.y + object.height],
+                  [object.x, object.y + object.height]
+                )
+              );
+            } else if (object.ellipse && object.width == object.height) {
+              self.polygons.push(
+                Polygon.fromCircle(Circle.create(object.x + object.width * 0.5, object.y + object.width * 0.5, object.width * 0.5), 8, 0)
+              );
+            } else if (object.polygon) {
+              var i,
+                max = object.polygon.length,
+                poly = [];
+              for (i = 0; i < max; ++i) {
+                poly.push([object.x + object.polygon[i].x, object.y +object.polygon[i].y]);
+              }
+              self.polygons.push(poly);
+            }
+          });
+
+        }
+      });
+    },
+    renderLayer: function(layer) {
+      // data: [array of tiles, 1-based, position of sprite from top-left]
+      // height: integer, height in number of sprites
+      // name: "string", internal name of layer
+      // opacity: integer
+      // type: "string", layer type (tile, object)
+      // visible: boolean
+      // width: integer, width in number of sprites
+      // x: integer, starting x position
+      // y: integer, starting y position
+      if (layer.type !== "tilelayer" || !layer.opacity) { return; }
+      var size = tmx.data.tilewidth;
+
+      layer.data.forEach(function(tile_idx, i) {
+        if (!tile_idx) { return; }
+        var img_x, img_y, s_x, s_y,
+            tile = tmx.data.tilesets[0];
+        tile_idx--;
+        img_x = (tile_idx % (tile.imagewidth / size)) * size;
+        img_y = ~~(tile_idx / (tile.imagewidth / size)) * size;
+        s_x = (i % layer.width) * size;
+        s_y = ~~(i / layer.width) * size;
+        ctx.drawImage(tmx.tileset, img_x, img_y, size, size,
+                    s_x, s_y, size, size);
+      });
+    },
+    renderPolygons: function() {
+      this.polygons.forEach(function(poly) {
+        Draw.polygon(ctx, poly, "blue");
+      });
+    },
+    renderLayers: function(layers) {
+      layers = Array.isArray(layers) ? layers : this.data.layers;
+      layers.forEach(this.renderLayer);
+      layers.forEach(this.renderLayer);
+    },
+    loadTileset: function(json) {
+      this.data = json;
+      this.tileset = $("<img />", { src: json.tilesets[0].image })[0]
+      this.tileset.onload = function() {
+        scene.on("frame:start", function() {
+          tmx.renderLayers(json.layers);
+          tmx.renderPolygons();
+        })
+      };
+    },
+  };
+
+
+  $.ajax({
+      url: "/test/test-tmx.json",
+      dataType: "json"
+  }).done(function(data) {
+      console.log(data);
+      tmx.loadTileset(data);
+      tmx.parsePolygons(data.layers);
+  });
+});
+
+
+</script>
+
+

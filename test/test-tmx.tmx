@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tileset-platformer" tilewidth="32" tileheight="32">
+  <image source="tileset-platformer.png" width="192" height="544"/>
+ </tileset>
+ <layer name="bg" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztz8sJACAMRMH06af/MkwJCoJBZmDv+yKAXS3XX5+4YOTm6xMX6KhFRy2/dAAAAAAAAADAiQULvQUa
+  </data>
+ </layer>
+ <layer name="collision" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzzsKgEAMQMEt1MJvoZ7F+9/MFBYiItvIIs7Ag5AqSQn4k+3oPJ938IYhGqOp9CEZqqi+qYnmaInWYtfla6Pupj59648n/gAAAAAAAADgagc0hwLV
+  </data>
+ </layer>
+ <layer name="collision" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzzsKhFAMQNFXjBbjr1DX4kLc/16MYCHykBksRDwHLoRUSUrAm0xb+3m/gyvmTKsmaqPuprv+8YmKTGXUR0M03nbd775RlalOz/rjjD8AAAAAAAAAOFoAO24EdA==
+  </data>
+ </layer>
+ <objectgroup name="collision" width="50" height="50">
+  <object x="129" y="289" width="221" height="75"/>
+  <object x="351" y="257" width="96" height="14"/>
+  <object x="95" y="161" width="64" height="31"/>
+  <object x="193" y="161" width="126" height="29"/>
+  <object x="392" y="50" width="47" height="47">
+   <ellipse/>
+  </object>
+  <object x="464" y="47">
+   <polygon points="34,5 53,5 54,44 54,76 -41,77"/>
+  </object>
+ </objectgroup>
+</map>
