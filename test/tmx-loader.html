@@ -33,7 +33,8 @@ var layer = scene.createLayer();
 //    window.setTimeout(callback, 1000);
 //};
 
-scene.start(window.requestAnimFrame)
+scene.start(window.requestAnimFrame);
+
 $(function() {
   console.log("ready go!");
   $.ajax({
@@ -47,7 +48,6 @@ $(function() {
       layer.rootNode.appendEntity(tmx);
   });
 });
-
 
 </script>
 

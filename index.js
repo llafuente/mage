@@ -5,7 +5,10 @@ module.exports = {
     Node: require("./lib/node.js"),
     Entity: require("./lib/entity.js"),
     EntityTMX: require("./lib/entity-tmx.js"),
-    Scene: require("./lib/scene.js")
+    Scene: require("./lib/scene.js"),
+    EventMachine: require("./lib/event-machine.js"),
+
+    Mage: require("./lib/mage.js")
 };
 
 module.exports.globalize = function (object) {

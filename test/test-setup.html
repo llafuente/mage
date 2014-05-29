@@ -21,7 +21,6 @@
 
 var mage = require("mage"),
     ctx = document.getElementById("canvas").getContext("2d");
-
 mage.globalize(window);
 
 var scene = new mage.Scene("scene", ctx, 960, 640);
@@ -41,6 +40,23 @@ scene.start(window.requestAnimFrame)
 mario.parentNode.translate([200, 200]);
 mario.parentNode.rotate([0, Math.TWO_PI], 5000);
 mario.parentNode.scale([[1, 1], [2, 2]], 5000);
+
+console.log(mage.Mage);
+
+var mg = new mage.Mage();
+mg.listen("up", "up", function() {
+    mario.parentNode.translate([0, -10]);
+});
+mg.listen("down", "down", function() {
+    mario.parentNode.translate([0, 10]);
+});
+mg.listen("left", "left", function() {
+    mario.parentNode.translate([-10, 0]);
+});
+mg.listen("right", "right", function() {
+    mario.parentNode.translate([10, 0]);
+});
+
 
 </script>
 

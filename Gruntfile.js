@@ -38,8 +38,6 @@ module.exports = function (grunt) {
               keepalive: true,
               port: 8000,
               listen: "127.0.0.1",
-              target: 'http://127.0.0.1:8000', // target url to open
-              open: "start",
               onCreateServer: function(server, connect, options) {
 
               }
