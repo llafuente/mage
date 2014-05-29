@@ -1,5 +1,6 @@
 module.exports = {
     EventEmitter: require("./lib/event-emitter.js"),
+    Assets: require("./lib/assets.js"),
     Movable: require("./lib/movable.js"),
     Node: require("./lib/node.js"),
     Entity: require("./lib/entity.js"),
