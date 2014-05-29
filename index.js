@@ -3,6 +3,7 @@ module.exports = {
     Movable: require("./lib/movable.js"),
     Node: require("./lib/node.js"),
     Entity: require("./lib/entity.js"),
+    EntityTMX: require("./lib/entity-tmx.js"),
     Scene: require("./lib/scene.js")
 };
 
