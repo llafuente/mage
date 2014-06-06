@@ -36,7 +36,7 @@ module.exports = function (grunt) {
           server: {
             options: {
               keepalive: true,
-              port: 8000,
+              port: 81,
               listen: "127.0.0.1",
               onCreateServer: function(server, connect, options) {
 
