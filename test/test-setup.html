@@ -21,14 +21,35 @@
 
 var mage = require("mage"),
     ctx = document.getElementById("canvas").getContext("2d");
+
+var engine = new mage.Engine(ctx);
+
 mage.globalize(window);
 
-var scene = new mage.Scene("scene", ctx, 960, 640);
+var scene = engine.createScene("scene", 960, 640);
 var layer = scene.createLayer();
 
-var mario = new mage.Entity("mario", "mario.jpg");
+var mario = new Entity("mario", "mario.jpg");
 
 mario.appendTo(layer.rootNode);
+
+mario.parentNode.translate([200, 200]);
+mario.parentNode.rotate([0, Math.TWO_PI], 5000);
+mario.parentNode.scale([[1, 1], [2, 2]], 5000);
+engine.listen("up", "up", function() {
+    mario.parentNode.translate([0, -10]);
+});
+engine.listen("down", "down", function() {
+    mario.parentNode.translate([0, 10]);
+});
+engine.listen("left", "left", function() {
+    mario.parentNode.translate([-10, 0]);
+});
+engine.listen("right", "right", function() {
+    mario.parentNode.translate([10, 0]);
+});
+
+
 
 // slow this shit i dont see the log!
 //window.requestAnimFrame = function (callback) {
@@ -36,27 +57,6 @@ mario.appendTo(layer.rootNode);
 //};
 
 scene.start(window.requestAnimFrame)
-
-mario.parentNode.translate([200, 200]);
-mario.parentNode.rotate([0, Math.TWO_PI], 5000);
-mario.parentNode.scale([[1, 1], [2, 2]], 5000);
-
-console.log(mage.Mage);
-
-var mg = new mage.Mage();
-mg.listen("up", "up", function() {
-    mario.parentNode.translate([0, -10]);
-});
-mg.listen("down", "down", function() {
-    mario.parentNode.translate([0, 10]);
-});
-mg.listen("left", "left", function() {
-    mario.parentNode.translate([-10, 0]);
-});
-mg.listen("right", "right", function() {
-    mario.parentNode.translate([10, 0]);
-});
-
 
 </script>
 

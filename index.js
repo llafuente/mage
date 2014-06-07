@@ -8,7 +8,7 @@ module.exports = {
     Scene: require("./lib/scene.js"),
     EventMachine: require("./lib/event-machine.js"),
 
-    Mage: require("./lib/mage.js")
+    Engine: require("./lib/engine.js")
 };
 
 module.exports.globalize = function (object) {
